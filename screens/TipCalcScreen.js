@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
+import { Button, Picker, Text, TextInput, View, StyleSheet } from 'react-native';
 
 
 export default class TipCalScreen extends React.Component {
@@ -12,7 +12,8 @@ export default class TipCalScreen extends React.Component {
     this.state = {
       numberOfPeople: 2,
       price: 0,
-      result: 0
+      result: 0,
+      taxAmount: '95',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +25,11 @@ export default class TipCalScreen extends React.Component {
   }
 
   handleSubmit() {
-    this.setState((state,) => ({ result: state.price * 1.5 }))
+    let total = this.state.price * (1 + Number(this.state.taxAmount));
+    console.log('this.state.state ==>', this.state.state);
+    console.log('Number(this.state.state) ==>', Number(this.state.state));
+    console.log('total ==>', total);
+    this.setState((state) => ({ result: state.price * (1 + Number(state.taxAmount)) }))
   }
 
   incrementNumberOfPeople(upOrDown) {
@@ -72,8 +77,19 @@ export default class TipCalScreen extends React.Component {
 
         <View style={styles.section}><Text>Choose State Tax</Text></View>
 
-        <View style={styles.section}>
-
+        <View>
+          <Picker
+            selectedValue={this.state.taxAmount}
+            style={{height: 120, width: 100}}
+            onValueChange={(itemValue, itemIndex) => {
+              console.log('itemValue ==>', itemValue);
+              this.setState({taxAmount: itemValue})
+            }
+          }>
+            <Picker.Item label="CA" value="95" />
+            <Picker.Item label="NY" value="100" />
+            <Picker.Item label="NJ" value="70" />
+          </Picker>
         </View>
 
         <Text>{this.state.result}</Text>

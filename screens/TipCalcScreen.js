@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
 
+
 export default class TipCalScreen extends React.Component {
   static navigationOptions = {
     title: 'TipCalc',
@@ -27,6 +28,9 @@ export default class TipCalScreen extends React.Component {
   }
 
   incrementNumberOfPeople(upOrDown) {
+    //TODO: refactor, pass state in, instead of using function in setState
+    //TODO: add error check for if numberOfPeople is negative number, 
+
     if (upOrDown === 'up') {
       this.setState((state) => ({ numberOfPeople: state.numberOfPeople += 1 }))
     }
@@ -38,33 +42,50 @@ export default class TipCalScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> How many people </Text>
-        <Text>{this.state.numberOfPeople}</Text>
-        {/* <TextInput
-          value={this.state.numberOfPeople}
-        /> */}
-        <Button
-          title='increase Number of People'
-          onPress={() => this.incrementNumberOfPeople('up')}
-        >+
-        </Button>
-        <Button
-          title='decrease Number of People'
-          onPress={() => this.incrementNumberOfPeople('down')}
-        >+
-        </Button>
 
-        <TextInput
-          keyboardType={'numeric'}
-          style={{height: 40}}
-          placeholder="Enter total meal cost"
-          onChangeText={(number) => this.handleChange(number)}
-        />
-        <Button
-          title="calculate"
-          onPress={this.handleSubmit}
-        >Calculate</Button>
+        <View style={styles.section}><Text> How many people </Text></View>
+
+        <View style={styles.section}>
+          <Text>{this.state.numberOfPeople}</Text>
+          <Button
+            style={{ width: 100 }}
+            title='+'
+            onPress={() => this.incrementNumberOfPeople('up')}
+          >+
+          </Button>
+          <Button
+            style={{ width: 100 }}
+            title='-'
+            onPress={() => this.incrementNumberOfPeople('down')}
+          >-
+          </Button>
+        </View>
+
+        <View style={styles.section}><Text>How much is the pretax subtotal?</Text></View>
+
+        <View style={styles.section}>
+          <TextInput
+            onChangeText={(text) => this.handleChange(text)}
+            keyboardType={'numeric'}
+          />
+        </View>
+
+        <View style={styles.section}><Text>Choose State Tax</Text></View>
+
+        <View style={styles.section}>
+
+        </View>
+
         <Text>{this.state.result}</Text>
+
+        <View style={styles.section}>
+          <Button
+            title="Calculate"
+            onPress={this.handleSubmit}
+          >
+          </Button>
+        </View>
+
       </View>
     );
   }
@@ -76,4 +97,12 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  section: {
+    flex: 1,
+    color: 'red',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });

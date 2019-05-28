@@ -59,7 +59,7 @@ const TipCalcStack = createStackNavigator({
 })
 
 TipCalcStack.navigationOptions = {
-  tabBarLabel: 'Calc',
+  tabBarLabel: 'TipCalc',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

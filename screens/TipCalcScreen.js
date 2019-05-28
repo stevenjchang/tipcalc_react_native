@@ -25,11 +25,9 @@ export default class TipCalScreen extends React.Component {
   }
 
   handleSubmit() {
-    let total = this.state.price * (1 + Number(this.state.taxAmount));
-    console.log('this.state.state ==>', this.state.state);
-    console.log('Number(this.state.state) ==>', Number(this.state.state));
-    console.log('total ==>', total);
-    this.setState((state) => ({ result: state.price * (1 + Number(state.taxAmount)) }))
+    let tax = Number(this.state.taxAmount) / 1000;
+    let total = this.state.price * (1 + tax);
+    this.setState({ result: total })
   }
 
   incrementNumberOfPeople(upOrDown) {
@@ -86,7 +84,7 @@ export default class TipCalScreen extends React.Component {
               this.setState({taxAmount: itemValue})
             }
           }>
-            <Picker.Item label="CA" value="95" />
+            <Picker.Item label="CA - 9.5%" value="95" />
             <Picker.Item label="NY" value="100" />
             <Picker.Item label="NJ" value="70" />
           </Picker>

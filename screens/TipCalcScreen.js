@@ -1,10 +1,28 @@
 import React from 'react';
-import { Text, TextInput, View, StyleSheet } from 'react-native';
+import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
 
 export default class TipCalScreen extends React.Component {
   static navigationOptions = {
     title: 'TipCalc',
   };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      price: 0,
+      result: 0
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(number) {
+    this.setState({ price: number })
+  }
+
+  handleSubmit() {
+    this.setState((state,) => ({ result: state.price * 1.5 }))
+  }
 
   render() {
     return (
@@ -13,8 +31,14 @@ export default class TipCalScreen extends React.Component {
         <TextInput
           keyboardType={'numeric'}
           style={{height: 40}}
-          // placeholder="Type here to translate!"
+          placeholder="Enter total meal cost"
+          onChangeText={(number) => this.handleChange(number)}
         />
+        <Button
+          title="calculate"
+          onPress={this.handleSubmit}
+        >Calculate</Button>
+        <Text>{this.state.result}</Text>
       </View>
     );
   }
